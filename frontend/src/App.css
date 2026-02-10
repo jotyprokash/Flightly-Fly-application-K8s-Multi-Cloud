@@ -1,0 +1,42 @@
+body {
+    margin: 0;
+    min-height: 100vh;
+
+    background-image: url('./flightly-bg.png');
+    background-repeat: no-repeat;
+    background-position: top center;
+    background-attachment: fixed;
+
+    /* KEY CHANGE */
+    background-size: 100% auto;
+
+    /* fallback color */
+    background-color: #0b1d2a;
+}
+
+/* keeps routed pages aligned */
+.page {
+    position: relative;
+    min-height: 100vh;
+}
+
+/* animations unchanged */
+.fade-appear, .fade-enter {
+    opacity: 0;
+    z-index: 1;
+}
+
+.fade-appear-active,
+.fade-enter.fade-enter-active {
+    opacity: 1;
+    transition: opacity 300ms linear 150ms;
+}
+
+.fade-exit {
+    opacity: 1;
+}
+
+.fade-exit.fade-exit-active {
+    opacity: 0;
+    transition: opacity 150ms linear;
+}

@@ -1,0 +1,112 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+/* ================================
+   Global Base Styles
+   ================================ */
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont,
+    'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans',
+    'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro,
+    Menlo, Monaco, Consolas,
+    'Courier New', monospace;
+}
+
+/* ================================
+   Flightly Purple Theme Overrides
+   ================================ */
+
+/* Primary buttons */
+.btn-primary {
+  background-color: #7a4aff !important;
+  border-color: #7a4aff !important;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+  background-color: #5a2dff !important;
+  border-color: #5a2dff !important;
+}
+
+/* Outline buttons */
+.btn-outline-primary {
+  color: #7a4aff !important;
+  border-color: #7a4aff !important;
+}
+
+.btn-outline-primary:hover {
+  background-color: #7a4aff !important;
+  color: #ffffff !important;
+}
+
+/* Text utilities */
+.text-primary {
+  color: #7a4aff !important;
+}
+
+/* Background utilities */
+.bg-primary {
+  background-color: #7a4aff !important;
+}
+
+/* ================================
+   Navigation Bar – Purple Theme
+   ================================ */
+
+/* Nav links (Ticket Booking, etc.) */
+.nav-link {
+  color: #7a4aff !important;
+  font-weight: 500;
+  position: relative;
+}
+
+/* Hover */
+.nav-link:hover {
+  color: #5a2dff !important;
+}
+
+/* Active tab */
+.nav-link.active,
+.nav-pills .nav-link.active {
+  background-color: #7a4aff !important;
+  color: #ffffff !important;
+  border-radius: 6px;
+}
+
+/* Underline animation */
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 0;
+  height: 2px;
+  background: #7a4aff;
+  transition: width 0.25s ease;
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
