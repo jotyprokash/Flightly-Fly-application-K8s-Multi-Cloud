@@ -1,0 +1,39 @@
+
+services:
+  mongo:
+    image: mongo:7.0
+    container_name: flightly-mongo
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: flightly-backend
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+      - MONGO_URI=mongodb://mongo:27017/flightly
+    depends_on:
+      - mongo
+    ports:
+      - "8080:8080"
+
+  frontend:
+    build:
+      context: ./frontend
+      # uses your existing multi-stage nginx Dockerfile
+      dockerfile: Dockerfile
+    container_name: flightly-frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      - "3000:80"
+
+volumes:
+  mongo_data:
