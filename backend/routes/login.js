@@ -1,53 +1,62 @@
 const express = require("express");
-const passport = require("passport");
 const User = require("../models/User");
 const jwt = require("jsonwebtoken");
-var bcrypt = require("bcrypt");
+const bcrypt = require("bcrypt");
 
 const router = express.Router();
 
-router.post("/login", async(req, res, next) => {
-    const { email, password } = req.body;
-    try {
-        User.findOne({ email: email }, (err, doc) => {
-            console.log(doc);
-            if (err) {} else {
-                if (!doc) {} else {
-                    bcrypt.compare(password, doc.password, function(error, response) {
-                        console.log(response);
-                        const token = jwt.sign({ doc }, "top_secret");
-                        res.status(200).json({ token });
-                    });
-                }
-            }
-        });
-    } catch (error) {}
-    // passport.authenticate("login", async(err, user, info) => {
-    //     try {
-    //         if (err || !user) {
-    //             const error = new Error("No User Found");
-    //             console.log("Yellow", err);
-    //             return next(error);
-    //         }
-    //         req.login(user, { session: false }, async(error) => {
-    //             if (error) return next(error);
-    //             const body = {
-    //                 _id: user._id,
-    //                 name: user.name,
-    //                 email: user.email,
-    //                 gender: user.gender,
-    //             };
-    //             const token = jwt.sign({ user: body }, "top_secret");
-    //             return res.json({ token });
-    //         });
-    //     } catch (error) {
-    //         return next(error);
-    //     }
-    // })(req, res, next);
-});
+/**
+ * POST /login
+ * Authenticate user and return JWT
+ */
+router.post("/login", async (req, res) => {
+  const { email, password } = req.body;
 
-// router.get('/Login', (req, res) => {
-//     res.send("Login Here")
-// })
+  // 1. Validate input
+  if (!email || !password) {
+    return res.status(400).json({
+      message: "Email and password are required",
+    });
+  }
+
+  try {
+    // 2. Find user
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(401).json({
+        message: "Invalid email or password",
+      });
+    }
+
+    // 3. Compare password
+    const isMatch = await bcrypt.compare(password, user.password);
+
+    if (!isMatch) {
+      return res.status(401).json({
+        message: "Invalid email or password",
+      });
+    }
+
+    // 4. Create token
+    const token = jwt.sign(
+      {
+        id: user._id,
+        email: user.email,
+      },
+      "top_secret", // later move to env
+      { expiresIn: "1h" }
+    );
+
+    // 5. Respond
+    return res.status(200).json({ token });
+
+  } catch (err) {
+    console.error("Login error:", err);
+    return res.status(500).json({
+      message: "Internal server error",
+    });
+  }
+});
 
 module.exports = router;
