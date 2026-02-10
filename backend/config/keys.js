@@ -1,3 +1,3 @@
 module.exports = {
-  MongoURI: "mongodb://127.0.0.1:27017/flightapp"
+  MongoURI: process.env.MONGO_URI || "mongodb://127.0.0.1:27017/flightapp",
 };
