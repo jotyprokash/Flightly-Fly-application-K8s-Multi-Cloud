@@ -1,0 +1,76 @@
+table {
+  width: 1050px;
+  height: 485px;
+
+  /* Modern container look */
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: 14px;
+
+  /* Purple accent instead of blue */
+  border: 2px solid rgba(122, 74, 255, 0.6);
+
+  /* Depth */
+  box-shadow:
+    0 12px 35px rgba(0, 0, 0, 0.25),
+    0 0 0 1px rgba(122, 74, 255, 0.15);
+
+  border-collapse: collapse;
+}
+
+/* Header row */
+th {
+  padding: 16px;
+  text-align: center;
+
+  background: linear-gradient(
+    135deg,
+    #7a4aff,
+    #9b6cff
+  );
+  color: #ffffff;
+
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+/* Table cells */
+td {
+  padding: 14px;
+  text-align: center;
+
+  color: #2c2c2c;
+  font-weight: 500;
+
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+/* Hover feedback (subtle but premium) */
+tr:hover td {
+  background-color: rgba(122, 74, 255, 0.06);
+  transition: background-color 0.2s ease;
+}
+
+
+/* Feature labels (first column only) */
+.feature-name {
+  color: #7a4aff;               /* Royal purple */
+  font-weight: 600;
+  font-size: 16px;
+  letter-spacing: 0.4px;
+  text-align: left;
+  padding-left: 18px;
+}
+
+/* Visual bullet for clarity */
+.feature-name::before {
+  content: "◆";
+  color: #9b6cff;
+  margin-right: 10px;
+  font-size: 12px;
+}
+
+/* Hover feedback */
+tr:hover .feature-name {
+  color: #5a2dff;
+}

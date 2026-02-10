@@ -1,0 +1,156 @@
+/* ---------- Layout ---------- */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    height: 100vh;
+    width: 100vw;
+    background: linear-gradient(180deg, #020617, #020617);
+    font-family: 'Montserrat', 'Roboto', sans-serif;
+    overflow: hidden;
+}
+
+.maint-cnt {
+    height: 100%;
+    width: 100%;
+    position: relative;
+}
+
+/* ---------- Header Brand ---------- */
+
+.header-nav {
+    position: absolute;
+    top: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    text-align: center;
+}
+
+.mytext1 {
+    color: #ffffff;
+    font-size: 48px;
+    font-weight: 600;
+    letter-spacing: 6px;
+    padding: 8px 24px;
+    border-radius: 6px;
+    background: rgba(0, 0, 0, 0.25);
+
+    text-shadow:
+        0 2px 8px rgba(0,0,0,0.35),
+        0 0 18px rgba(255,255,255,0.25);
+
+    animation: textFade 2.2s ease-out 1;
+}
+
+@keyframes textFade {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+        letter-spacing: 18px;
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+        letter-spacing: 6px;
+    }
+}
+
+/* ---------- Slogan ---------- */
+
+.slogan {
+    position: absolute;
+    top: 38%;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    width: 100%;
+}
+
+h1 {
+    color: #ffffff;
+    font-size: 3.2rem;
+    font-weight: 500;
+    line-height: 1.4;
+    position: relative;
+}
+
+.word4 {
+    display: block;
+    font-size: 3.6rem;
+    font-weight: 700;
+    margin-bottom: 14px;
+}
+
+/* ---------- Animated Message ---------- */
+
+.message {
+    position: relative;
+    height: 2.8rem;
+    overflow: hidden;
+}
+
+.word1,
+.word2 {
+    font-size: 1.6rem;
+    color: rgba(255,255,255,0.85);
+    animation: slideText 6s ease-in-out infinite;
+}
+
+.word2 {
+    animation-delay: 3s;
+}
+
+@keyframes slideText {
+    0% { opacity: 0; transform: translateY(20px); }
+    10% { opacity: 1; transform: translateY(0); }
+    40% { opacity: 1; }
+    50% { opacity: 0; transform: translateY(-20px); }
+    100% { opacity: 0; }
+}
+
+/* ---------- CTA Button ---------- */
+
+.mainBtn {
+    position: absolute;
+    bottom: 12%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 277px;
+    height: 50px;
+    line-height: 60px;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 0.08em;
+    text-decoration: none;
+    cursor: pointer;
+    z-index: 1000;
+}
+
+.mainBtn svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.mainBtn svg rect {
+    stroke-width: 3;
+    stroke-dasharray: 353, 0;
+    transition: all 600ms ease;
+}
+
+.mainBtn span {
+    background: linear-gradient(to right, #7dd3fc, #38bdf8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.mainBtn:hover svg rect {
+    stroke-dasharray: 196, 543;
+    stroke-dashoffset: 437;
+}
