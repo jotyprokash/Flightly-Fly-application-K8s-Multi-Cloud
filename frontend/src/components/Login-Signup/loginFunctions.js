@@ -1,39 +1,35 @@
 import axios from 'axios';
 
-// LOGIN
+const API_BASE = 'http://localhost:8080';
+
+/* ======================
+   LOGIN
+====================== */
 export function logUserIn(userCredentials) {
   return axios.post(
-    '/login',
+    `${API_BASE}/login`,
     userCredentials,
     {
       headers: {
-        'Content-Type': 'application/json'
-      }
+        'Content-Type': 'application/json',
+      },
     }
   );
 }
 
-// LOAD ROUTES / PROFILE (JWT via Authorization header)
-export function loadRoutes() {
-  const authToken = sessionStorage.getItem('authToken');
-  return axios.get(
-    '/user/profile',
-    {
-      headers: {
-        Authorization: `Bearer ${authToken}`
-      }
-    }
-  );
-}
+/* ======================
+   GET CURRENT USER
+   (Protected route)
+====================== */
+export function getCurrentUser() {
+  const token = localStorage.getItem('token');
 
-// GET CURRENT USER DETAILS
-export function getCurrentUserDetails(authToken) {
   return axios.get(
-    '/user/profile',
+    `${API_BASE}/user`,
     {
       headers: {
-        Authorization: `Bearer ${authToken}`
-      }
+        Authorization: `Bearer ${token}`,
+      },
     }
   );
 }
