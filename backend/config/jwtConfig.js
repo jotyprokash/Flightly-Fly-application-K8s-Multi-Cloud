@@ -9,7 +9,7 @@ passport.use(new JWTstrategy({
     jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken()
 }, async (token, done) => {
     try {
-        return done(null, token.user);
+        return done(null, token);
     } catch (error) {
         done(error);
     }

@@ -10,25 +10,22 @@ var bus = require('../models/Buses');
 //     })
 // })
 
-router.post('/', (req, res) => {
-
-    bus.find({ 'startCity': req.body.startCity, 'destination': req.body.destination }).exec((err, bus) => {
-        if (err) {
-            res.json({ status: false, message: "error while searching" })
+router.post('/', async (req, res) => {
+    try {
+        if (req.body.bId) {
+            const result = await bus.findOne({ _id: req.body.bId });
+            return res.json({ bus: result });
+        } else {
+            const result = await bus.find({
+                startCity: req.body.startCity,
+                destination: req.body.destination
+            });
+            return res.json({ bus: result });
         }
-        else res.json({ bus })
-    })
-})
-
-router.post('/', (req, res) => {
-
-    bus.findOne({ _id: req.body.bId }, (err, bus) => {
-        if (err) {
-            res.json({ status: false, message: "error while searching with ID" })
-        }
-        else
-            res.json({ bus })
-    })
+    } catch (err) {
+        console.error('Route query error:', err);
+        return res.status(500).json({ status: false, message: 'Server error' });
+    }
 })
 
 // router.post('/', (req, res) => {

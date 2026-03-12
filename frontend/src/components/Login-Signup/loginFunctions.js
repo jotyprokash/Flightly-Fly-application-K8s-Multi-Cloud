@@ -22,7 +22,7 @@ export function logUserIn(userCredentials) {
    (Protected route)
 ====================== */
 export function getCurrentUser() {
-  const token = localStorage.getItem('token');
+  const token = sessionStorage.getItem('authToken');
 
   return axios.get(
     `${API_BASE}/user`,
