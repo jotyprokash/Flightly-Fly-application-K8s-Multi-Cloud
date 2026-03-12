@@ -1,0 +1,45 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: flightly-local
+
+resources:
+  - namespace.yaml
+  - ../../base
+  - ingress.yaml
+
+configMapGenerator:
+  - name: app-config
+    literals:
+      - MONGO_URI=mongodb://mongo:27017/flightly
+      - NODE_ENV=development
+
+secretGenerator:
+  - name: app-secrets
+    literals:
+      - JWT_SECRET=top_secret
+
+patches:
+  - target:
+      kind: Deployment
+      name: backend
+    patch: |-
+      - op: replace
+        path: /spec/template/spec/containers/0/env/0/value
+        value: development
+  - patch: |-
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: backend
+      spec:
+        template:
+          spec:
+            containers:
+            - name: backend
+              env:
+              - name: MONGO_URI
+                valueFrom:
+                  configMapKeyRef:
+                    name: app-config
+                    key: MONGO_URI
