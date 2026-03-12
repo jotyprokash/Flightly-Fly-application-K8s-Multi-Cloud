@@ -4,7 +4,7 @@ Flightly is a full-stack air-booking web application that simulates a real-world
 
 Built with **React, Node.js, Express, and MongoDB**, Flightly focuses on practical system design, secure authentication, and end-to-end booking workflows—making it ideal for demonstrating full‑stack engineering and backend integration skills.
 
----
+
 
 ## Tech Stack
 
@@ -13,7 +13,7 @@ Built with **React, Node.js, Express, and MongoDB**, Flightly focuses on practic
 - **Database:** MongoDB
 - **Containerization:** Docker, Docker Compose
 
----
+
 
 ## Run Locally (Manual Setup)
 
@@ -28,7 +28,7 @@ node -v
 npm -v
 ```
 
----
+
 
 ### Clone the Project
 
@@ -36,7 +36,7 @@ npm -v
 git clone https://github.com/jotyprokash/Flightly-An-Air-Booking-Web-App.git
 ```
 
----
+
 
 ### Run Frontend
 
@@ -53,7 +53,7 @@ Frontend will be available at:
 http://localhost:3000
 ```
 
----
+
 
 ### MongoDB Installation (Local)
 
@@ -73,7 +73,7 @@ sudo systemctl enable mongod
 systemctl status mongod
 ```
 
----
+
 
 ### Run Backend
 
@@ -94,7 +94,7 @@ Backend will be available at:
 http://localhost:5000
 ```
 
----
+
 
 
 ### Build & Run with Docker 
@@ -104,7 +104,7 @@ docker compose build --no-cache
 docker compose up -d
 ```
 
----
+
 
 ### Verify Containers
 
@@ -117,7 +117,7 @@ Services:
 - Backend → http://localhost:5000
 - MongoDB → mongodb://localhost:27017
 
----
+
 
 ### Stop & Clean Up
 
