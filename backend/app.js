@@ -46,9 +46,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors())
-app.use('/', login);
-app.use('/booking', bookingRoute);
-app.use('/register', registerRouter);  // To register page 
-app.use('/user', passport.authenticate('jwt', { session: false }), loggedInPage); //To Secure Route
+app.get('/api/health', (req, res) => res.status(200).send('OK'));
+app.use('/api/', login);
+app.use('/api/booking', bookingRoute);
+app.use('/api/register', registerRouter);  // To register page 
+app.use('/api/user', passport.authenticate('jwt', { session: false }), loggedInPage); //To Secure Route
 
 module.exports = app;

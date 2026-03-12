@@ -7,7 +7,7 @@ const router = express.Router();
 router.get('/profile', (req, res, next) => {
     res.json({
         user: req.user,
-        token: req.query.secret_token
+        token: req.headers.authorization ? req.headers.authorization.split(' ')[1] : null
     })
 });
 
