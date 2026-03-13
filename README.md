@@ -1,6 +1,6 @@
 # Flightly
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE) ![Kubernetes](https://img.shields.io/badge/kubernetes-%23326ce5.svg?style=for-the-badge&logo=kubernetes&logoColor=white) ![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white) ![GitOps](https://img.shields.io/badge/GitOps-enabled-brightgreen?style=for-the-badge&logo=git) ![CI/CD](https://img.shields.io/badge/CI%2FCD-Active-blue?style=for-the-badge&logo=githubactions&logoColor=white) ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB) ![Node.js](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)
+![Kubernetes](https://img.shields.io/badge/Kubernetes-%23326ce5.svg?style=for-the-badge&logo=kubernetes&logoColor=white) ![Docker](https://img.shields.io/badge/Docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white) ![GitOps](https://img.shields.io/badge/GitOps-brightgreen?style=for-the-badge&logo=git&logoColor=white) ![CI/CD](https://img.shields.io/badge/CI%2FCD-blue?style=for-the-badge&logo=githubactions&logoColor=white) ![React](https://img.shields.io/badge/React-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB) ![Node.js](https://img.shields.io/badge/Node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)
 
 Flightly is a full-stack airline reservation and management system designed for robust, scalable deployment.
 
