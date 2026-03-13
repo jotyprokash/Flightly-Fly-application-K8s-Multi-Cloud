@@ -5,13 +5,13 @@ The application has been successfully normalized and deployed to a local Minikub
 ## 1. Environment Status
 The system is running on Minikube with all components (Frontend, Backend, MongoDB) healthy.
 
-![Terminal Status](/home/joty/Desktop/Flightly-Modern-Air-Travel-Booking-System/minikube-1/02-minikube/evidence/terminal_status.png)
+![Terminal Status](evidence/terminal_status.png)
 *Pod and Ingress status showing healthy Running state.*
 
 ## 2. API Connectivity
 Basic connectivity tests confirm that the NGINX Ingress is correctly routing traffic to both the React frontend and the Express backend.
 
-![Terminal Health](/home/joty/Desktop/Flightly-Modern-Air-Travel-Booking-System/minikube-1/02-minikube/evidence/terminal_health.png)
+![Terminal Health](evidence/terminal_health.png)
 *Curl health checks returning 200 OK via the Ingress.*
 
 ## 3. User Journey Verification
@@ -19,13 +19,13 @@ Basic connectivity tests confirm that the NGINX Ingress is correctly routing tra
 ### Login Phase
 The user can access the login interface and authenticate against the MongoDB backend using JWT.
 
-![Website Login](/home/joty/Desktop/Flightly-Modern-Air-Travel-Booking-System/minikube-1/02-minikube/evidence/website_login.png)
+![Website Login](evidence/website_login.png)
 *The Login UI correctly rendered and functional.*
 
 ### Booking Phase
 Once logged in, the user can search for flights and proceed to selection. The application correctly handles relative `/api` routing.
 
-![Website Booking](/home/joty/Desktop/Flightly-Modern-Air-Travel-Booking-System/minikube-1/02-minikube/evidence/website_booking.png)
+![Website Booking](evidence/website_booking.png)
 *Authenticated booking interface showing flight selection.*
 
 ## 4. Conclusion
