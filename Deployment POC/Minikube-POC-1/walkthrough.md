@@ -6,6 +6,7 @@ The application has been successfully normalized and deployed to a local Minikub
 The system is running on Minikube with all components (Frontend, Backend, MongoDB) healthy.
 
 ![Terminal Status](evidence/terminal_status.png)
+
 *Pod and Ingress status showing healthy Running state.*
 
 ## 2. API Connectivity
