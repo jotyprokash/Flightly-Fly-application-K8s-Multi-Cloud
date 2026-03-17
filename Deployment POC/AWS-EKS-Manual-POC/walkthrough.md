@@ -30,8 +30,8 @@ Instead of a containerized MongoDB, we'll provision a robust Managed Database.
 - **Service**: Amazon DocumentDB
 - **Action**: Create cluster.
 - **Settings**:
-  - Instance class: `db.t3.medium` (for cost-efficiency during PoC)
-  - Number of instances: 2 (Primary and Replica)
+  - Instance class: `db.t3.medium` *(Note: This is the smallest/cheapest instance type available for DocumentDB).*
+  - Number of instances: 1 (Primary only. We will skip the Replica to save costs for this PoC).
   - Connectivity: Select the `flightly-eks-vpc`. Assign it to the private subnets.
   - Authentication: Choose a solid Master username and password. **Save these.**
 - **Security Group**: After creation, edit the Database Security Group to allow inbound TCP on port `27017` from the VPC CIDR (`10.0.0.0/16`).
@@ -47,14 +47,14 @@ Now we provision the actual EKS cluster.
 - **Note**: Click "Create" and wait (this can take 10-15 minutes).
 
 ## 5. EKS Compute (Worker Nodes)
-Once the cluster is Active, we must add compute capacity.
+Once the cluster is Active, we must add compute capacity. **We will use minimal compute to save costs.**
 - **Prerequisite Role**: Go to IAM -> Roles -> Create Role -> AWS Service -> EC2. Attach `AmazonEKSWorkerNodePolicy`, `AmazonEKS_CNI_Policy`, and `AmazonEC2ContainerRegistryReadOnly`. Name it `flightly-eks-node-role`.
 - **Action**: In the EKS Cluster Dashboard, go to **Compute** tab -> **Add Node Group**.
 - **Settings**:
   - Name: `flightly-node-group`
   - IAM Role: `flightly-eks-node-role`
   - Subnets: Private subnets only.
-  - Instance type: `t3.medium`
+  - Instance type: `t3.micro` *(This is a very cheap burstable instance. It has enough RAM (1GB) to run Node.js and React).*
   - Desired size: 2.
 
 ## 6. Accessing the Cluster
