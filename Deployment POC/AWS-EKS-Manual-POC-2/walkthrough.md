@@ -20,7 +20,7 @@ Before spinning up the EKS cluster, we need our VPC and subnets defined accordin
   - Number of private subnets: 2 (for EKS Nodes and Database)
   - NAT gateways: 1 in AZ.
 
-![VPC Setup Preview](./evidence/vpc_setup_preview.png)
+![VPC Creation Summary](./evidence/vpc_Summary.png)
 
 - **Result**: You now have a solid network foundation spanning `us-east-1a` and `us-east-1b` (or your chosen region).
 
