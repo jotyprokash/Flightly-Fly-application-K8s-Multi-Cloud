@@ -6,6 +6,10 @@ We are deploying the architecture documented in our implementation plan: VPC, EC
 
 ## 1. Network & VPC Preparation
 Before spinning up the EKS cluster, we need our VPC and subnets defined according to best practices.
+
+**Architecture Diagram Overview:**
+![EKS VPC Architecture](./evidence/vpc-architecture.jpg)
+
 - **Service**: VPC
 - **Action**: Use the "VPC and more" creation wizard.
 - **Settings**:
@@ -15,6 +19,9 @@ Before spinning up the EKS cluster, we need our VPC and subnets defined accordin
   - Number of public subnets: 2
   - Number of private subnets: 2 (for EKS Nodes and Database)
   - NAT gateways: 1 in AZ.
+
+![VPC Setup Preview](./evidence/vpc-setup-preview.png)
+
 - **Result**: You now have a solid network foundation spanning `us-east-1a` and `us-east-1b` (or your chosen region).
 
 ## 2. Container Image Registry (Amazon ECR)
