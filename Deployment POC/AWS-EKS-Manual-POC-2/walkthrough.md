@@ -59,6 +59,23 @@ Instead of a containerized MongoDB, we'll provision a robust Managed Database.
   - Authentication: Choose a solid Master username and password. **Save these.**
 - **Security Group**: After creation, edit the Database Security Group to allow inbound TCP on port `27017` from the VPC CIDR (`10.0.0.0/16`).
 
+### DocumentDB Subnet Group
+*(Mapping the isolated Private Subnets to the Database)*
+![DocumentDB Subnet Group](./evidence/documentdb_subnet_group.png)
+
+### DocumentDB Cluster Creation
+*(Cost-optimized configuration for the DB Engine)*
+![DocumentDB Setup 1](./evidence/documentdb_setup_1.png)
+![DocumentDB Setup 2](./evidence/documentdb_setup_2.png)
+
+### DocumentDB Cluster Available
+*(Database successfully deployed inside the `flightly-eks-vpc`)*
+![DocumentDB Available](./evidence/documentdb_cluster_available.png)
+
+### DocumentDB Security Group Firewall
+*(Allowing `27017` traffic from the VPC to the database)*
+![DocumentDB Security Group](./evidence/documentdb_security_group.png)
+
 ## 4. Kubernetes Control Plane (Amazon EKS)
 Now we provision the actual EKS cluster.
 - **Prerequisite Role**: Go to IAM -> Roles -> Create Role -> AWS Service -> EKS. Name it `flightly-eks-cluster-role`.
