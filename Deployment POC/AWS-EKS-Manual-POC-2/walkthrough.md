@@ -32,6 +32,22 @@ We must store the Docker images for the Frontend and Backend.
 - **Repo 2**: `flightly-frontend`
 - **Manual Push**: Navigate into each repository, click "View push commands" in the top right, and follow the CLI steps on your local machine to authenticate Docker, build, tag, and push your images to AWS.
 
+### ECR Backend CLI Execution
+*(Building, tagging, and pushing `flightly-backend`)*
+![Backend CLI Step 1](./evidence/backend_cli_1.png)
+![Backend CLI Step 2](./evidence/backend_cli_2.png)
+![Backend CLI Step 3](./evidence/backend_cli_3.png)
+
+### ECR Frontend CLI Execution
+*(Building, tagging, and pushing `flightly-frontend`)*
+![Frontend CLI Step 1](./evidence/frontend_cli_1.png)
+![Frontend CLI Step 2](./evidence/frontend_cli_2.png)
+
+### ECR AWS Dashboard Evidence
+*(Verifying the images in the ECR Repositories)*
+![ECR Backend Dashboard](./evidence/ecr_dashboard_BE.png)
+![ECR Frontend Dashboard](./evidence/ecr_dashboard_FE.png)
+
 ## 3. Database Provisioning (Amazon DocumentDB)
 Instead of a containerized MongoDB, we'll provision a robust Managed Database.
 - **Service**: Amazon DocumentDB
