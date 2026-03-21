@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+spec:
+  template:
+    spec:
+      containers:
+        - name: backend
+          image: 434562741459.dkr.ecr.us-east-1.amazonaws.com/flightly-backend:latest
+          env:
+            - name: NODE_ENV
+              value: production
+            - name: MONGO_URI
+              valueFrom:
+                secretKeyRef:
+                  name: flightly-db-secret
+                  key: MONGO_URI
