@@ -103,6 +103,9 @@ Now we provision the actual EKS cluster.
 ## 5. EKS Compute (Worker Nodes)
 Once the cluster (`flightly-cluster`) shows an **Active** status, we must add compute capacity. **We will use minimal compute to save costs.**
 - **Prerequisite Role**: Created `flightly-eks-node-role` in IAM for the EC2 worker nodes.
+
+  *(IAM Role for EKS Worker Nodes)*
+  ![EKS Node IAM Role](./evidence/eks_node_iam_role.png)
 - **Action**: In the EKS Cluster Dashboard, go to the **Compute** tab -> **Add Node Group**.
 - **Settings**:
   - Name: `flightly-node-group`
@@ -117,7 +120,7 @@ Once the cluster (`flightly-cluster`) shows an **Active** status, we must add co
 
 ### EKS Worker Nodes Active
 *(Verifying the nodes have successfully registered with the cluster)*
-![EKS Nodes Active](./evidence/eks_nodes_active.png)
+![EKS Nodes Active](./evidence/eks_node_active.png)
 
 ## 6. Accessing the Cluster
 With the cluster running, map your local `kubectl` to it.
