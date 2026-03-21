@@ -189,3 +189,37 @@ Full production stack verified end-to-end:
 ### Live Application in Browser
 *(Flightly running live at `flightly.jotysdevsecopslab.xyz` served from AWS EKS)*
 ![Live Application](./evidence/live_domain.png)
+
+## 10. SSL/HTTPS with AWS Certificate Manager (ACM)
+
+To serve the application securely over HTTPS, we provisioned a free AWS Certificate Manager (ACM) certificate and attached it to the existing ALB via the Kubernetes Ingress annotations.
+
+### Phase A: Request & Validate the ACM Certificate
+
+- **Service**: AWS Certificate Manager → Request a public certificate
+- **Domain**: `flightly.jotysdevsecopslab.xyz`
+- **Validation method**: DNS validation
+- **Auto-validation**: Clicked "Create records in Route 53" — AWS automatically added the required CNAME to the hosted zone.
+
+#### ACM Certificate Request
+*(Requesting a public certificate for the domain)*
+![ACM Request Start](./evidence/acm_request_start.png)
+
+#### ACM Certificate Issued
+*(DNS validation complete — certificate status: ✅ Issued)*
+![ACM Certificate Issued](./evidence/acm_certificate_issued.png)
+
+### Phase B: Update Kubernetes Ingress for HTTPS
+
+Updated `k8s/overlays/production/ingress.yaml` with the following ALB annotations:
+- **`certificate-arn`** — attaches the ACM certificate to the ALB
+- **`listen-ports`** — enables both HTTP (80) and HTTPS (443)
+- **`ssl-redirect: 443`** — automatically redirects all HTTP traffic to HTTPS
+
+#### HTTPS Ingress Applied
+*(Applying the updated Ingress via `kubectl apply -k k8s/overlays/production`)*
+![HTTPS Ingress Applied](./evidence/https_ingress_applied.png)
+
+### 🔒 Application Secured with HTTPS
+*(Flightly live at `https://flightly.jotysdevsecopslab.xyz` with a valid SSL padlock)*
+![HTTPS Live](./evidence/https_live_png.png)
