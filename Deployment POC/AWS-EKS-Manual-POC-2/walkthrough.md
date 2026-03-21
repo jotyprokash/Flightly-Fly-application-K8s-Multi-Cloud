@@ -185,3 +185,7 @@ The application is publicly accessible at:
 
 Full production stack verified end-to-end:
 `Browser → Route 53 → ALB → EKS Pods → DocumentDB`
+
+### Live Application in Browser
+*(Flightly running live at `flightly.jotysdevsecopslab.xyz` served from AWS EKS)*
+![Live Application](./evidence/live_domain.png)
