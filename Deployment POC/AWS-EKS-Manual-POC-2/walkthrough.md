@@ -79,12 +79,26 @@ Instead of a containerized MongoDB, we'll provision a robust Managed Database.
 ## 4. Kubernetes Control Plane (Amazon EKS)
 Now we provision the actual EKS cluster.
 - **Prerequisite Role**: Go to IAM -> Roles -> Create Role -> AWS Service -> EKS. Name it `flightly-eks-cluster-role`.
+
+  *(EKS Cluster IAM Role)*
+  ![EKS IAM Role](./evidence/eks_iam_role.png)
+
 - **Service**: Amazon EKS -> Clusters -> Create
 - **Settings**:
   - Name: `flightly-cluster`
+  - Version: `1.35` (or latest available)
   - Role: Select the `flightly-eks-cluster-role`.
-  - Networking: Select `flightly-eks-vpc`. Select Private AND Public subnets.
+  - Configuration: Use **Custom configuration** (disable EKS Auto Mode).
+  - Networking: Select `flightly-eks-vpc`. Select ALL Private AND Public subnets.
+  - Endpoint Access: **Public and private**.
 - **Note**: Click "Create" and wait (this can take 10-15 minutes).
+
+### EKS Cluster Configuration
+*(Selecting custom configurations and disabling Auto Mode)*
+![EKS Cluster Setup 1](./evidence/eks_cluster_setup.png)
+
+*(Networking step placing the cluster in flightly-eks-vpc)*
+![EKS Cluster Setup 2](./evidence/eks_cluster_setup_2.png)
 
 ## 5. EKS Compute (Worker Nodes)
 Once the cluster is Active, we must add compute capacity. **We will use minimal compute to save costs.**
