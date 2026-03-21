@@ -149,12 +149,22 @@ Because we want an AWS Application Load Balancer to handle traffic, we must inst
 ![ALB Setup 2](./evidence/alb_terminal_setup_2.png)
 
 ## 8. Deployment Updates
-Finally, modify your local Kubernetes manifests (`/k8s` folder):
-1. **Backend Deployment**: Change the `image:` to your AWS ECR URI. Update the `MONGO_URI` secret to point to your new DocumentDB endpoint.
-2. **Frontend Deployment**: Change the `image:` to your AWS ECR URI.
-3. **Ingress**: Update your ingress class and annotations to `alb`. Attach your ACM Certificate ARN to the ingress annotations to enable HTTPS.
+Finally, we apply our Kustomize overlays in the `/k8s/overlays/production` folder to override our local configs for AWS.
+1. **Backend & Frontend**: Update the deployment deployments to point to the AWS ECR URIs.
+2. **Ingress**: Update ingress format to use `ingressClassName: alb` so AWS Native ALB Controller creates the load balancer.
+3. **Security**: Instead of hardcoding the Database password, we inject it directly into the cluster via the CLI `kubectl create secret` as a securely encrypted Kubernetes Secret. 
 
-Apply the files: `kubectl apply -k k8s/overlays/production` (or equivalent).
+### K8s Secret Injection
+*(Securely storing the DocumentDB credentials in the cluster memory)*
+![K8s Secret Created](./evidence/k8s_secret_created.png)
+
+### K8s Manifests Applied
+*(Applying the AWS production Kustomize overlays)*
+![K8s Manifests Applied](./evidence/k8s_manifests_applied.png)
+
+### AWS Resources Deployed
+*(Verifying both application pods are Running and the ALB Ingress is provisioning)*
+![K8s Resources Deployed](./evidence/k8s_resources_applied.png)
 
 ## 9. DNS Finalization (Route 53)
 - **Service**: Route 53 -> Hosted Zones
