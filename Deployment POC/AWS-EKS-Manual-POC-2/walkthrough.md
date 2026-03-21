@@ -125,10 +125,14 @@ Once the cluster (`flightly-cluster`) shows an **Active** status, we must add co
 ## 6. Accessing the Cluster
 With the cluster running, map your local `kubectl` to it.
 ```bash
-aws eks update-kubeconfig --region <your-region> --name flightly-cluster
+aws eks update-kubeconfig --region us-east-1 --name flightly-cluster
 kubectl get nodes
 ```
-*(You should see your two `t3.medium` nodes in 'Ready' state).*
+*(You should see your two `t3.micro` nodes in 'Ready' state).*
+
+### Terminal kubectl Authentication
+*(Connecting our local machine to the new remote cluster)*
+![EKS Terminal Access](./evidence/eks_terminal_nodes.png)
 
 ## 7. ALB Controller & Ingress
 Because we want an AWS Application Load Balancer to handle traffic, we must install the ALB Controller. *Note: this step requires some CLI interaction on your local machine to setup IAM points*.
