@@ -101,15 +101,23 @@ Now we provision the actual EKS cluster.
 ![EKS Cluster Setup 2](./evidence/eks_cluster_setup_2.png)
 
 ## 5. EKS Compute (Worker Nodes)
-Once the cluster is Active, we must add compute capacity. **We will use minimal compute to save costs.**
-- **Prerequisite Role**: Go to IAM -> Roles -> Create Role -> AWS Service -> EC2. Attach `AmazonEKSWorkerNodePolicy`, `AmazonEKS_CNI_Policy`, and `AmazonEC2ContainerRegistryReadOnly`. Name it `flightly-eks-node-role`.
-- **Action**: In the EKS Cluster Dashboard, go to **Compute** tab -> **Add Node Group**.
+Once the cluster (`flightly-cluster`) shows an **Active** status, we must add compute capacity. **We will use minimal compute to save costs.**
+- **Prerequisite Role**: Created `flightly-eks-node-role` in IAM for the EC2 worker nodes.
+- **Action**: In the EKS Cluster Dashboard, go to the **Compute** tab -> **Add Node Group**.
 - **Settings**:
   - Name: `flightly-node-group`
-  - IAM Role: `flightly-eks-node-role`
-  - Subnets: Private subnets only.
+  - Node IAM Role: `flightly-eks-node-role`
+  - Subnets: Select your **Private subnets** only (Pods should run in the private subnets).
   - Instance type: `t3.micro` *(This is a very cheap burstable instance. It has enough RAM (1GB) to run Node.js and React).*
   - Desired size: 2.
+
+### EKS Node Group Configuration
+*(Attaching t3.micro instances and the EC2 Node IAM Role)*
+![EKS Node Group Setup](./evidence/eks_node_group_setup.png)
+
+### EKS Worker Nodes Active
+*(Verifying the nodes have successfully registered with the cluster)*
+![EKS Nodes Active](./evidence/eks_nodes_active.png)
 
 ## 6. Accessing the Cluster
 With the cluster running, map your local `kubectl` to it.
