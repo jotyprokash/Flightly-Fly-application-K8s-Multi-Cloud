@@ -135,11 +135,18 @@ kubectl get nodes
 ![EKS Terminal Access](./evidence/eks_terminal_nodes.png)
 
 ## 7. ALB Controller & Ingress
-Because we want an AWS Application Load Balancer to handle traffic, we must install the ALB Controller. *Note: this step requires some CLI interaction on your local machine to setup IAM points*.
+Because we want an AWS Application Load Balancer to handle traffic, we must install the ALB Controller. This step requires CLI interaction on the local machine to setup IAM points and Helm charts.
 1. Create an IAM policy based on the AWS Load Balancer Controller JSON.
-2. Use `eksctl` or AWS Console (OIDC providers) to associate an IAM Role for a Service Account (IRSA).
+2. Use `eksctl` to associate an IAM Role for a Service Account (IRSA).
 3. Apply the controller using `helm`.
-*(We will detail these specific command-line steps in the technical execution phase, as they are hard to do purely via dashboard clicks).*
+
+### ALB Controller CLI Setup (Part 1: IAM & IRSA)
+*(Creating the OIDC provider and linking IAM roles to Kubernetes service accounts)*
+![ALB Setup 1](./evidence/alb_terminal_setup_1.png)
+
+### ALB Controller CLI Setup (Part 2: Helm Installation)
+*(Deploying the controller via Helm and verifying ready status)*
+![ALB Setup 2](./evidence/alb_terminal_setup_2.png)
 
 ## 8. Deployment Updates
 Finally, modify your local Kubernetes manifests (`/k8s` folder):
