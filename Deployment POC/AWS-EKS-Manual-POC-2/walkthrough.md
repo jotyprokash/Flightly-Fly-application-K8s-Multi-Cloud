@@ -174,3 +174,14 @@ Finally, we apply our Kustomize overlays in the `/k8s/overlays/production` folde
   - Route traffic to: Alias to Application and Classic Load Balancer.
   - Choose the ALB that was just automatically created by your K8s Ingress.
 - **Verification**: Navigate to your domain, verify the green padlock (ACM SSL is working), and test the frontend-to-backend data flow through the load balancer.
+
+### Route 53 DNS Record
+*(Mapping `flightly.jotysdevsecopslab.xyz` to the AWS ALB)*
+![Route 53 DNS Record](./evidence/route53_dns_record.png)
+
+### 🚀 Application Live
+The application is publicly accessible at:
+**http://flightly.jotysdevsecopslab.xyz**
+
+Full production stack verified end-to-end:
+`Browser → Route 53 → ALB → EKS Pods → DocumentDB`
