@@ -223,3 +223,9 @@ Updated `k8s/overlays/production/ingress.yaml` with the following ALB annotation
 ### 🔒 Application Secured with HTTPS
 *(Flightly live at `https://flightly.jotysdevsecopslab.xyz` with a valid SSL padlock)*
 ![HTTPS Live](./evidence/https_live_png.png)
+
+## Architecture Overview
+
+The following diagram represents the complete cloud-native architecture provisioned throughout this PoC. It illustrates the full traffic flow from the public internet through to the application pods and managed database.
+
+![Flightly AWS EKS Production Architecture](./evidence/architecture_diagram.png)
