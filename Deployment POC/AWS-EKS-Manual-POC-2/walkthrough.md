@@ -9,7 +9,7 @@ We are deploying the architecture documented in our implementation plan: VPC, EC
 
 The following diagram represents the complete cloud-native architecture provisioned throughout this PoC. It illustrates the full traffic flow from the public internet through to the application pods and managed database.
 
-![Flightly AWS EKS Production Architecture](./evidence/architecture_diagram.png)
+![Flightly AWS EKS Production Architecture](./evidence/architecture_diagram.svg)
 
 ## 1. Network & VPC Preparation
 Before spinning up the EKS cluster, we need our VPC and subnets defined according to best practices.
