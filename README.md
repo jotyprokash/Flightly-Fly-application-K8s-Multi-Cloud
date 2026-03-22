@@ -46,10 +46,23 @@ For active development, you can run the services natively.
 
 > **Note**: For detailed system requirements and fresh dependency installation (e.g., Ubuntu package commands for MongoDB/Node.js), refer to the [Local Development Guide](./docs/local-development.md).
 
-## Kubernetes Deployment
+## ☁️ Cloud & Kubernetes Deployments
 
-To deploy Flightly to a local Kubernetes cluster, navigate to the Kubernetes deployment directories. A guided reference for Minikube is available in the [Minikube Walkthrough](./minikube-1/02-minikube/walkthrough.md).
+This repository documents the incremental evolution of the application's infrastructure from local development to a production-ready cloud environment.
 
+### PoC 1: Local Orchestration (Minikube)
+The initial deployment strategy focuses on containerization and basic Kubernetes orchestration using Minikube. 
+👉 [View PoC 1 Walkthrough](./Deployment%20POC/Minikube-POC-1/walkthrough.md) 
+
+### PoC 2: Production AWS Architecture (Amazon EKS)
+Graduating from local development, the application is deployed into a fully managed, highly available AWS environment using EKS, DocumentDB, and an Application Load Balancer.
+
+![AWS EKS Production Architecture](./Deployment%20POC/AWS-EKS-Manual-POC-2/evidence/architecture_diagram.svg)
+
+👉 [View PoC 2 Detailed Walkthrough & Deployment Guide](./Deployment%20POC/AWS-EKS-Manual-POC-2/walkthrough.md)
+
+### 🔜 Upcoming: PoC 3 (Infrastructure as Code)
+Transitioning the manual AWS PoC into automated, modular **Terraform** to demonstrate modern IaC best practices.
 ## Contributing
 
 Contributions are welcome. Please ensure any feature additions are accompanied by appropriate test coverage and documentation updates to maintain project stability.
