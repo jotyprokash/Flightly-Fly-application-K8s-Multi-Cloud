@@ -15,3 +15,15 @@ variable "environment" {
   type        = string
   default     = "poc3"
 }
+
+variable "db_master_username" {
+  description = "Username for the DocumentDB master user"
+  type        = string
+  sensitive   = true
+}
+
+variable "db_master_password" {
+  description = "Password for the DocumentDB master user"
+  type        = string
+  sensitive   = true
+}
