@@ -1,52 +1,49 @@
-# Phase 3: Flightly Terraform IaC PoC
+# PoC 3: Full Infrastructure Automation with Terraform
 
-This Proof of Concept (PoC) demonstrates automating our production-grade architecture using **Terraform**, rather than manually provisioning via the AWS Management Console dashboard. This builds upon Phase 2 to ensure reproducible infrastructure-as-code while maintaining identical architecture (VPC, EKS, DocumentDB, and Application Load Balancer foundations).
+This Proof of Concept (PoC) demonstrates automating our production-grade architecture using **Terraform**, moving beyond manual provisioning to clear, reproducible Infrastructure as Code (IaC).
 
-## 1. Project Initialization & Validation
-- **Action**: Initialize Terraform modules
-- **Command**:
-  ```bash
-  cd terraform
-  terraform init
-  ```
+## Key Achievements
 
-### Terraform Initialization Execution
-*(Initializing the AWS provider and configuring local backend)*
-![Terraform Init completed](./evidence/terraform_init.png)
+1.  **Terraform Automation**: Replaced manual EKS, VPC, and DocumentDB creation with a modular Terraform suite.
+2.  **Secret Management**: Automated the creation of Kubernetes secrets for DocumentDB connectivity using the provisioned cluster endpoint.
+3.  **ALB Controller Integration**: Automated the deployment of the AWS Load Balancer Controller within the EKS cluster.
+4.  **Application Deployment**: Successfully built, pushed, and deployed the frontend and backend microservices to the new cluster.
+5.  **Domain Connectivity**: Provisioned an ALB and updated the Route 53 `A` record for `flightly.jotysdevsecopslab.xyz` to point to the new infrastructure.
+6.  **Full Cleanup**: Successfully performed a `terraform destroy` (with manual cleanup of orphaned ALB/ENIs) to ensure zero ongoing costs.
 
-## 2. Infrastructure Plan (Dry-Run)
-Before applying changes, we securely run the Terraform plan to review the execution steps and confirm 0 potential mistakes.
-- **Action**: Run the Terraform plan safely.
-- **Environment**: Export sensitive database values.
-- **Command**:
-  ```bash
-  export TF_VAR_db_master_username="flightlyadmin"
-  export TF_VAR_db_master_password="SecureFlightlyPassword123!"
-  terraform plan -out=tfplan
-  ```
+## Architecture
 
-### Terraform Plan Output
-*(Verifying the execution plan for VPC, EKS, DocDB, ECR without modifying state)*
-![Terraform Plan Summary](./evidence/terraform_plan.png)
+The architecture remains identical to PoC 2 but is now fully defined in code:
+- **VPC Module**: Custom VPC with public/private subnets, NAT Gateway, and Internet Gateway.
+- **EKS Module**: Managed Kubernetes cluster with managed node groups (t3.micro).
+- **DocumentDB Module**: Highly available DocumentDB cluster with automated subnet group and security group management.
+- **ECR Module**: Private container registries for the microservices.
 
-## 3. Automated Provisioning (Deployment)
-- **Action**: Apply the generated execution plan to spin up AWS resources.
-- **Command**:
-  ```bash
-  terraform apply tfplan
-  ```
+## Troubleshooting & Learnings
 
-### AWS Resources Deployed
-*(Terminal output showing successfully provisioned architecture including EKS, VPC, and ECR endpoints)*
-![Terraform Apply Output](./evidence/terraform_apply.png)
+> [!TIP]
+> **ALB Controller Readiness**: We discovered that the ALB controller needs a few extra seconds to be fully operational before `kubectl apply -k` is run. Adding a `rollout status` check fixed the webhook connectivity errors.
 
-## 4. Visual Verification (AWS Console)
-To prove the Terraform code perfectly deployed our architecture, we visually verify the AWS components exactly as we did in PoC 2.
+> [!IMPORTANT]
+> **Orphaned Resources**: When destroying the infrastructure, the ALB controller might sometimes leave behind Security Groups or Load Balancers if the pods are terminated before they can clean up. We manually resolved this to unblock the VPC deletion.
 
-### EKS Cluster Configuration
-*(EKS cluster Active with 4 **t3.micro** worker nodes instantiated via module)*
-![EKS Active Console](./evidence/eks_console_active.png)
+## Proof of Work
 
-### DocumentDB Cluster Available
-*(DocumentDB instance Available and properly attached to our private subnet group)*
-![DocDB Active Console](./evidence/docdb_console_active.png)
+### 1. Terraform Initialization & Plan
+Infrastructure was initialized and validated via dry-run:
+![Terraform Init](./evidence/terraform_init.png)
+![Terraform Plan](./evidence/terraform_plan.png)
+
+### 2. Live Infrastructure Status (AWS Console)
+The following screenshots confirm the automated provisioning of our core architecture:
+
+**EKS Cluster Active**:
+![EKS Active](./evidence/eks_console_active.png)
+
+**DocumentDB Cluster Available**:
+![DocumentDB Active](./evidence/docdb_console_active.png)
+
+## Cleanup
+All AWS resources have been destroyed via `terraform destroy`.
+**Total AWS Cost Impact: $0.**
+

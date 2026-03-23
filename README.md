@@ -61,8 +61,12 @@ Graduating from local development, the application is deployed into a fully mana
 
 👉 [View PoC 2 Detailed Walkthrough & Deployment Guide](./Deployment%20POC/AWS-EKS-Manual-POC-2/walkthrough.md)
 
-### 🔜 Upcoming: PoC 3 (Infrastructure as Code)
-Transitioning the manual AWS PoC into automated, modular **Terraform** to demonstrate modern IaC best practices.
+### PoC 3: Automated Infrastructure (Terraform)
+Full infrastructure automation using modular Terraform. Transitioned from manual AWS provisioning to Infrastructure as Code (IaC), including automated EKS, DocumentDB, VPC, and ECR setup with integrated application deployment.
+
+👉 [View PoC 3 Detailed Walkthrough & IaC Guide](./Deployment%20POC/Terraform-IaC-POC-3/walkthrough.md)
+
 ## Contributing
+
 
 Contributions are welcome. Please ensure any feature additions are accompanied by appropriate test coverage and documentation updates to maintain project stability.
