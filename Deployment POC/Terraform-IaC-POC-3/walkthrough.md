@@ -29,13 +29,19 @@ The architecture is now fully defined as modular, interoperable code:
 
 ## Proof of Work
 
-### 1. Unified Terraform State
-The entire stack is managed as a single dependency graph:
-![Terraform Graph Placeholder](./evidence/terraform_init.png)
+### 1. Terraform Initialization & Plan
+Infrastructure was initialized and validated via dry-run:
+![Terraform Init](./evidence/terraform_init.png)
+![Terraform Plan](./evidence/terraform_plan.png)
 
-### 2. Live Automated Setup
-A single run results in a secure, domain-mapped application:
-**Active Application**: `https://flightly.jotysdevsecopslab.xyz` (Ready for recruiter review)
+### 2. Live Infrastructure Status (AWS Console)
+The following screenshots confirm the automated provisioning of our core architecture:
+
+**EKS Cluster Active**:
+![EKS Active](./evidence/eks_console_active.png)
+
+**DocumentDB Cluster Available**:
+![DocumentDB Active](./evidence/docdb_console_active.png)
 
 ---
 All AWS resources are managed via IaC. Total AWS Cost Impact during active runs: minimal (t3.micro/medium).

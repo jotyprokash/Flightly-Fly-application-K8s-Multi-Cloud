@@ -108,7 +108,7 @@ resource "null_resource" "deploy_k8s_app" {
       docker push ${module.ecr.frontend_repository_url}:latest
       
       # Apply Kustomize manifests
-      cd ../ && kubectl apply -k k8s/overlays/production
+      cd ../ && kubectl apply -k kubernetes/overlays/production
     EOT
   }
 
