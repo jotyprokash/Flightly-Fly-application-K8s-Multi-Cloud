@@ -45,3 +45,12 @@ module "ecr" {
   project_name = var.project_name
   environment  = var.environment
 }
+
+resource "null_resource" "deploy_k8s_app" {
+  depends_on = [module.eks, module.documentdb, module.ecr]
+
+  provisioner "local-exec" {
+    command = "chmod +x deploy_app.sh && bash deploy_app.sh ${module.eks.cluster_name} ${var.aws_region} ${module.ecr.frontend_repository_url} ${module.ecr.backend_repository_url} ${module.documentdb.cluster_endpoint}"
+  }
+}
+
