@@ -112,6 +112,16 @@ resource "null_resource" "deploy_k8s_app" {
     EOT
   }
 
+  depends_on = [
+    module.eks,
+    module.documentdb,
+    module.ecr,
+    module.acm,
+    module.alb_controller,
+    kubernetes_secret.db_secret
+  ]
+}
+
 resource "kubernetes_ingress_v1" "flightly" {
   metadata {
     name = "flightly-ingress"
@@ -163,7 +173,7 @@ resource "kubernetes_ingress_v1" "flightly" {
 resource "time_sleep" "wait_for_alb" {
   depends_on = [kubernetes_ingress_v1.flightly]
 
-  create_duration = "60s" # Give ALB controller time to provision the ALB and populate status
+  create_duration = "300s" # 5-minute window for ALB creation and status population
 }
 
 data "kubernetes_ingress_v1" "flightly" {
