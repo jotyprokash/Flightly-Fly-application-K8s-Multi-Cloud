@@ -160,17 +160,32 @@ resource "kubernetes_ingress_v1" "flightly" {
   depends_on = [module.alb_controller, module.acm, null_resource.deploy_k8s_app]
 }
 
+resource "time_sleep" "wait_for_alb" {
+  depends_on = [kubernetes_ingress_v1.flightly]
+
+  create_duration = "60s" # Give ALB controller time to provision the ALB and populate status
+}
+
+data "kubernetes_ingress_v1" "flightly" {
+  metadata {
+    name      = kubernetes_ingress_v1.flightly.metadata[0].name
+    namespace = kubernetes_ingress_v1.flightly.metadata[0].namespace
+  }
+
+  depends_on = [time_sleep.wait_for_alb]
+}
+
 resource "aws_route53_record" "flightly" {
   zone_id = data.aws_route53_zone.selected.zone_id
   name    = "flightly.jotysdevsecopslab.xyz"
   type    = "A"
 
   alias {
-    name                   = kubernetes_ingress_v1.flightly.status[0].load_balancer[0].ingress[0].hostname
+    name                   = data.kubernetes_ingress_v1.flightly.status[0].load_balancer[0].ingress[0].hostname
     zone_id                = "Z35SXDOTRQ7X7K" # Canonical Hosted Zone ID for ALBs in us-east-1
     evaluate_target_health = true
   }
 
-  depends_on = [kubernetes_ingress_v1.flightly]
+  depends_on = [data.kubernetes_ingress_v1.flightly]
 }
 
