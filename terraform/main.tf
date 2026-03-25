@@ -171,9 +171,13 @@ resource "kubernetes_ingress_v1" "flightly" {
 }
 
 resource "time_sleep" "wait_for_alb" {
-  depends_on = [kubernetes_ingress_v1.flightly]
+  depends_on = [kubernetes_ingress_v1.flightly, null_resource.deploy_k8s_app]
 
   create_duration = "300s" # 5-minute window for ALB creation and status population
+
+  triggers = {
+    deploy_id = null_resource.deploy_k8s_app.id
+  }
 }
 
 data "kubernetes_ingress_v1" "flightly" {
@@ -186,9 +190,10 @@ data "kubernetes_ingress_v1" "flightly" {
 }
 
 resource "aws_route53_record" "flightly" {
-  zone_id = data.aws_route53_zone.selected.zone_id
-  name    = "flightly.jotysdevsecopslab.xyz"
-  type    = "A"
+  zone_id         = data.aws_route53_zone.selected.zone_id
+  name            = "flightly.jotysdevsecopslab.xyz"
+  type            = "A"
+  allow_overwrite = true
 
   alias {
     name                   = data.kubernetes_ingress_v1.flightly.status[0].load_balancer[0].ingress[0].hostname

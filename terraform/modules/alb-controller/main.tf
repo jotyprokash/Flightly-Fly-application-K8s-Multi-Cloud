@@ -60,6 +60,8 @@ resource "aws_iam_policy" "alb_controller" {
           "elasticloadbalancing:DescribeLoadBalancerAttributes",
           "elasticloadbalancing:DescribeListeners",
           "elasticloadbalancing:DescribeListenerAttributes",
+          "elasticloadbalancing:DescribeListenerCertificates",
+          "elasticloadbalancing:DescribeSSLPolicies",
           "elasticloadbalancing:DescribeRules",
           "elasticloadbalancing:DescribeTargetGroups",
           "elasticloadbalancing:DescribeTargetGroupAttributes",
@@ -92,18 +94,12 @@ resource "aws_iam_policy" "alb_controller" {
         Resource = "*"
       },
       {
-        Effect = "Allow"
+        Effect = "Allow",
         Action = [
           "ec2:AuthorizeSecurityGroupIngress",
-          "ec2:RevokeSecurityGroupIngress"
-        ]
-        Resource = "*"
-      },
-      {
-        Effect = "Allow"
-        Action = [
+          "ec2:RevokeSecurityGroupIngress",
           "ec2:CreateSecurityGroup"
-        ]
+        ],
         Resource = "*"
       },
       {

@@ -33,8 +33,3 @@ variable "oidc_provider_url" {
   type        = string
 }
 
-variable "policy_arn" {
-  description = "The ARN of the IAM policy for the LB controller"
-  type        = string
-  default     = "arn:aws:iam::434562741459:policy/AWSLoadBalancerControllerIAMPolicy"
-}
