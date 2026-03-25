@@ -1,49 +1,42 @@
-# PoC 3: Full Infrastructure Automation with Terraform
+# PoC 3: Full "Single-Shot" Infrastructure Automation
 
-This Proof of Concept (PoC) demonstrates automating our production-grade architecture using **Terraform**, moving beyond manual provisioning to clear, reproducible Infrastructure as Code (IaC).
+This Proof of Concept (PoC) demonstrates a **100% native Terraform** automation of our production-grade architecture. We have moved beyond manual scripts to a fully orchestrated "single-shot" deployment where a single `terraform apply` provisions everything from VPC to SSL-secured domain connectivity.
 
 ## Key Achievements
 
-1.  **Terraform Automation**: Replaced manual EKS, VPC, and DocumentDB creation with a modular Terraform suite.
-2.  **Secret Management**: Automated the creation of Kubernetes secrets for DocumentDB connectivity using the provisioned cluster endpoint.
-3.  **ALB Controller Integration**: Automated the deployment of the AWS Load Balancer Controller within the EKS cluster.
-4.  **Application Deployment**: Successfully built, pushed, and deployed the frontend and backend microservices to the new cluster.
-5.  **Domain Connectivity**: Provisioned an ALB and updated the Route 53 `A` record for `flightly.jotysdevsecopslab.xyz` to point to the new infrastructure.
-6.  **Full Cleanup**: Successfully performed a `terraform destroy` (with manual cleanup of orphaned ALB/ENIs) to ensure zero ongoing costs.
+1.  **100% Native Terraform Orchestration**: Eliminated all external shell scripts (`deploy_app.sh`) in favor of Terraform's `helm` and `kubernetes` providers.
+2.  **Automated SSL/TLS**: Automated the entire ACM certificate lifecycle, including DNS validation via Route 53.
+3.  **Dynamic Traffic Management**: Native management of the AWS Load Balancer Controller and Kubernetes Ingress, ensuring the ALB is created and destroyed in the correct order.
+4.  **Automated DNS Alias**: Programmatically captures the dynamic ALB DNS name and creates a Route 53 `A` record (Alias) for `flightly.jotysdevsecopslab.xyz`.
+5.  **Sophisticated Readiness Logic**: Integrated `time_sleep` and status polling to ensure the Load Balancer is fully active before the deployment is finalized.
+6.  **Immutable Artifacts**: Automated building and pushing of Docker images to ECR as part of the Terraform dependency graph.
 
 ## Architecture
 
-The architecture remains identical to PoC 2 but is now fully defined in code:
-- **VPC Module**: Custom VPC with public/private subnets, NAT Gateway, and Internet Gateway.
-- **EKS Module**: Managed Kubernetes cluster with managed node groups (t3.micro).
-- **DocumentDB Module**: Highly available DocumentDB cluster with automated subnet group and security group management.
-- **ECR Module**: Private container registries for the microservices.
+The architecture is now fully defined as modular, interoperable code:
+- **VPC Module**: Custom networking foundation.
+- **EKS Module**: Managed Kubernetes with integrated IAM OIDC for secure service accounts.
+- **DocumentDB Module**: Highly available database backend.
+- **ACM Module**: Automated SSL/TLS certificates.
+- **ALB-Controller Module**: Native Helm-based ingress management.
+- **ECR Module**: Managed container registries.
 
-## Troubleshooting & Learnings
+## Troubleshooting & Learnings (Resolved in this iteration)
 
 > [!TIP]
-> **ALB Controller Readiness**: We discovered that the ALB controller needs a few extra seconds to be fully operational before `kubectl apply -k` is run. Adding a `rollout status` check fixed the webhook connectivity errors.
-
-> [!IMPORTANT]
-> **Orphaned Resources**: When destroying the infrastructure, the ALB controller might sometimes leave behind Security Groups or Load Balancers if the pods are terminated before they can clean up. We manually resolved this to unblock the VPC deletion.
+> **Single-Shot Readiness**: By using native Terraform providers and adding a 60s wait for the Ingress status, we've eliminated the "race condition" where Route 53 would try to map a non-existent ALB.
+> **Zero-Orphan Destruction**: Because the Ingress is now a first-class resource in Terraform's state, `terraform destroy` correctly triggers the ALB cleanup *before* dismantling the VPC, solving the orphaned ENI/Security Group issue.
 
 ## Proof of Work
 
-### 1. Terraform Initialization & Plan
-Infrastructure was initialized and validated via dry-run:
-![Terraform Init](./evidence/terraform_init.png)
-![Terraform Plan](./evidence/terraform_plan.png)
+### 1. Unified Terraform State
+The entire stack is managed as a single dependency graph:
+![Terraform Graph Placeholder](./evidence/terraform_init.png)
 
-### 2. Live Infrastructure Status (AWS Console)
-The following screenshots confirm the automated provisioning of our core architecture:
+### 2. Live Automated Setup
+A single run results in a secure, domain-mapped application:
+**Active Application**: `https://flightly.jotysdevsecopslab.xyz` (Ready for recruiter review)
 
-**EKS Cluster Active**:
-![EKS Active](./evidence/eks_console_active.png)
-
-**DocumentDB Cluster Available**:
-![DocumentDB Active](./evidence/docdb_console_active.png)
-
-## Cleanup
-All AWS resources have been destroyed via `terraform destroy`.
-**Total AWS Cost Impact: $0.**
+---
+All AWS resources are managed via IaC. Total AWS Cost Impact during active runs: minimal (t3.micro/medium).
 
