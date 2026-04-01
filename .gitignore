@@ -30,3 +30,6 @@ minikube-1/
 *.tfvars.json
 .terraform.lock.hcl
 terraform-bin/
+
+# Python
+venv/
