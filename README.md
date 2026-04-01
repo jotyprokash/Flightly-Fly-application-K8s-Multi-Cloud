@@ -66,6 +66,13 @@ Full infrastructure automation using modular Terraform. Transitioned from manual
 
 👉 [View PoC 3 Detailed Walkthrough & IaC Guide](./Deployment%20POC/Terraform-IaC-POC-3/walkthrough.md)
 
+### PoC 4: Production DevSecOps Platform (Advanced Security & GitOps)
+The final evolution of the project into a professional-grade DevSecOps platform. This PoC integrates automated security gates (SAST, SCA, DAST), self-hosted GitHub runners, and GitOps synchronization with Argo CD for total infrastructure and application security.
+
+![Production DevSecOps Architecture](./devsecops/reporting/architecture.png)
+
+👉 [View PoC 4 Detailed DevSecOps & Security Guide](./devsecops/walkthrough-poc4.md)
+
 ## Contributing
 
 
