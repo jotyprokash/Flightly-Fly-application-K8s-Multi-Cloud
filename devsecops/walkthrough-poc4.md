@@ -10,7 +10,7 @@ The goal is to demonstrate a "Secure by Design" approach where every commit is a
 
 The following diagram illustrates the complete DevSecOps ecosystem. It focuses on the **Security Pipeline Flow** and the **GitOps Sync Flow** that keeps our Kubernetes cluster in sync with our repository state.
 
-![Production DevSecOps Architecture](./reporting/architecture.png)
+![Production DevSecOps Architecture](../docs/assets/architecture.png)
 
 ### Key Architectural Pillars:
 1.  **Distributed Runner Node**: Using a dedicated EC2 host to run self-hosted GitHub Actions runners, keeping build traffic within our VPC.
