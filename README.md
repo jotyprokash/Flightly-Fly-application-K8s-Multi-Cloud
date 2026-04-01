@@ -6,19 +6,19 @@ Flightly is a full-stack airline reservation and management system designed for 
 
 ![Flightly Landing Page](docs/assets/preview.png)
 
-## 🏗️ Production Architecture
+## Architecture
 
-The following diagram represents the terminal, production-ready **Cloud-Native DevSecOps ecosystem** of Flightly. It illustrates the complete flow from development, through automated security scanning, to highly available deployment on AWS EKS with GitOps synchronization.
+- **Frontend:** React (SPA)
+- **Backend:** Node.js, Express (REST API)
+- **Database:** MongoDB
+- **Infrastructure:** Docker, Kubernetes
 
-![Flightly Production Architecture](./docs/assets/architecture.png)
-
-### 🛠️ Core Technology Stack
-- **Frontend:** React (SPA) with Vite
-- **Backend:** Node.js (Express) REST API
-- **Database:** Amazon DocumentDB (EKS-native MongoDB compatible)
-- **Security:** Snyk, CodeQL, Semgrep, Trivy, Gitleaks, OWASP ZAP, Nuclei
-- **Infrastructure:** AWS EKS, VPC, Route53, ALB, Self-Hosted Runner
-- **GitOps:** Argo CD (Automated Sync & Drift Detection)
+```mermaid
+flowchart LR
+    Client((User)) -->|HTTP| UI(React Frontend UI)
+    UI -->|REST| API(Node.js API Services)
+    API -->|TCP| DB[(MongoDB)]
+```
 
 ## Quick Start (Docker)
 
