@@ -1,0 +1,74 @@
+name: DevSecOps CI (Self-Hosted Monolith)
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  security_and_build:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Secrets Scan (Gitleaks)
+        run: |
+          docker run -v ${PWD}:/path zricethezav/gitleaks:latest detect --source="/path" -v
+
+      - name: CodeQL Initialization
+        uses: github/codeql-action/init@v2
+        with:
+          languages: javascript
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v2
+
+      - name: Snyk SCA Check
+        run: |
+          npm install -g snyk || sudo npm install -g snyk
+          snyk auth ${{ secrets.SNYK_TOKEN }}
+          snyk test --all-projects || echo "Snyk found vulnerabilities (check report)."
+
+      - name: Run SonarQube Scan
+        uses: sonarsource/sonarqube-scan-action@master
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: "http://localhost:9000"
+
+      - name: Checkov IaC Scan
+        run: |
+          docker run --tty --volume $PWD:/work bridgecrew/checkov -d /work/devsecops/infrastructure --soft-fail
+
+      - name: Build Docker Image
+        run: |
+          docker build -t localhost:30002/flightly/flightly-app:${{ github.sha }} ./frontend
+
+      - name: Trivy Container Image Scan
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: 'localhost:30002/flightly/flightly-app:${{ github.sha }}'
+          format: 'table'
+          exit-code: '1'
+          ignore-unfixed: true
+          vuln-type: 'os,library'
+          severity: 'CRITICAL,HIGH'
+
+      - name: Push to Self-Hosted Harbor
+        run: |
+          echo "${{ secrets.HARBOR_PASSWORD }}" | docker login localhost:30002 -u "${{ secrets.HARBOR_USERNAME }}" --password-stdin
+          docker push localhost:30002/flightly/flightly-app:${{ github.sha }}
+
+      - name: Update GitOps Manifest
+        run: |
+          cd devsecops/gitops/deployments/flightly
+          sed -i.bak "s|image: .*|image: localhost:30002/flightly/flightly-app:${{ github.sha }}|g" deployment.yaml
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git commit -a -m "GitOps: Update image tag to ${{ github.sha }} [skip ci]"
+          git push
